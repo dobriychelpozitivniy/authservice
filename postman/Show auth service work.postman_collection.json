@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "b69829ef-ca44-4412-bf4f-303be61e5633",
+		"name": "Show auth service work",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let at = pm.cookies.get(\"access-token\")\r",
+							"let rt = pm.cookies.get(\"refresh-token\")\r",
+							"pm.test(\"Cookies is exist\", function () {\r",
+							"    var code = pm.response.code\r",
+							"    pm.expect(code).to.eql(200)\r",
+							"    pm.expect(Boolean(at)).to.equal(true);\r",
+							"    pm.expect(Boolean(rt)).to.equal(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "testuser",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "wwww",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic dGVzdHVzZXI6d3d3dw==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8081/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8081",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "i",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"check json response\", function () {\r",
+							"    var code = pm.response.code\r",
+							"    pm.expect(code).to.eql(200)\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.userId).to.eql(\"testuser\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8081/i",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8081",
+					"path": [
+						"i"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "me",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check json response\", function () {\r",
+							"    var code = pm.response.code\r",
+							"    pm.expect(code).to.eql(200)\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.userId).to.eql(\"testuser\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyIjp7InVzZXJJZCI6InRlc3R1c2VyIn0sImV4cCI6NTI2MzQ2ODE3NzksImlhdCI6MTYzNDY4MTcxOX0.BFGKesUkUMnN107mOu4xs88TRUWkgbvdMC8lJ8c7voY\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8081/me",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8081",
+					"path": [
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let at = pm.cookies.get(\"access-token\")\r",
+							"let rt = pm.cookies.get(\"refresh-token\")\r",
+							"pm.test(\"Cookies is not exist\", function () {\r",
+							"    var code = pm.response.code\r",
+							"    pm.expect(code).to.eql(200)\r",
+							"    pm.expect(Boolean(at)).to.equal(false);\r",
+							"    pm.expect(Boolean(rt)).to.equal(false);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8081/logout",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8081",
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

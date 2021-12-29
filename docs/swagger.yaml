@@ -1,0 +1,166 @@
+basePath: /
+definitions:
+  models.BodyRequest:
+    properties:
+      access_token:
+        type: string
+    required:
+    - access_token
+    type: object
+  models.Response:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  models.UserClaims:
+    properties:
+      user_id:
+        type: string
+    required:
+    - user_id
+    type: object
+host: localhost:8081
+info:
+  contact: {}
+  description: API Server for Auth Service
+  title: Auth Service
+  version: "1.0"
+paths:
+  /i:
+    post:
+      consumes:
+      - application/json
+      description: get info about logged in user
+      operationId: info
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserClaims'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Info
+      tags:
+      - user
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: login
+      operationId: login
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Login
+      tags:
+      - auth
+  /logout:
+    get:
+      description: delete cookies with tokens
+      operationId: logout
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Logout
+      tags:
+      - user
+  /me:
+    post:
+      description: get info about logged in user or info about user in body
+      operationId: me
+      parameters:
+      - description: user token
+        in: body
+        name: input
+        schema:
+          $ref: '#/definitions/models.BodyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserClaims'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Me
+      tags:
+      - user
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Cookie
+    type: apiKey
+swagger: "2.0"

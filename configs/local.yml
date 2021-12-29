@@ -1,0 +1,15 @@
+host: '127.0.0.1'
+port: 8081
+db_path: 'db/users'
+key: 'asdf'
+access_token_ttl: 60
+refresh_token_ttl: 3600
+
+mongo_config:
+  db_host: '127.0.0.1'
+  db_port: '27017'
+  db_username: ''
+  db_password: ''
+  db_timeout: 5000
+  db_name: 'auth'
+  db_collection: 'users'

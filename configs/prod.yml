@@ -1,0 +1,13 @@
+host: '0.0.0.0'
+port: 8081
+db_path: 'db/users'
+key: 'asdf'
+access_token_ttl: 60
+refresh_token_ttl: 3600
+db_host: 'mongo'
+db_port: '27017'
+db_username: 'admin'
+db_timeout: 5000
+db_password: 'tetapass'
+db_name: 'auth'
+db_collection: 'users'
